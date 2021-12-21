@@ -10,7 +10,7 @@ type User = {
   },
   data: { 
     email: string;
-    stripe_custumer_id: string;
+    stripe_customer_id: string;
   }
 }
 
@@ -27,7 +27,7 @@ const subscribe = async (req: NextApiRequest, res: NextApiResponse) => {
       ),
     );
 
-    let customerId = user.data.stripe_custumer_id;
+    let customerId = user.data.stripe_customer_id;
 
     if (!customerId) {
       const strupeCustomer = await stripe.customers.create({
@@ -38,7 +38,7 @@ const subscribe = async (req: NextApiRequest, res: NextApiResponse) => {
         q.Update(
           q.Ref(q.Collection('users'), user.ref.id), {
             data: { 
-              stripe_custumer_id: strupeCustomer.id,
+              stripe_customer_id: strupeCustomer.id,
             }
           }
         ),
